@@ -1,0 +1,7 @@
+name: BossQuests
+version: 1.0
+description: Quests module for Boss
+author: HappyPikachu
+
+main: me.pikamug.BossQuestsModule
+depend: [Boss, Quests]
