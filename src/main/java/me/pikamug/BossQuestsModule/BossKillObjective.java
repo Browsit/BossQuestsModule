@@ -37,6 +37,7 @@ public class BossKillObjective extends CustomObjective implements Listener {
 			return;
 		}
 		String mobName = event.getBoss().getName();
+		String customMobName = event.getBoss().getSettings().getCustomName();
 		for (Quest q : quester.getCurrentQuests().keySet()) {
 			Map<String, Object> datamap = getDataForPlayer(killer, this, q);
 			if (datamap != null) {
@@ -46,7 +47,8 @@ public class BossKillObjective extends CustomObjective implements Listener {
 				}
 				String[] spl = mobNames.split(",");
 				for (String str : spl) {
-					if (str.equals("ANY") || mobName.equalsIgnoreCase(str)) {
+					if (str.equals("ANY") || mobName.equalsIgnoreCase(str)
+					        || str.equalsIgnoreCase(customMobName)) {
 						incrementObjective(killer, this, 1, q);
 						return;
 					}
