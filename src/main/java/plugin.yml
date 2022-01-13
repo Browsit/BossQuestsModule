@@ -1,7 +1,8 @@
 name: BossQuests
-version: 1.1
+version: 1.2
 description: Quests module for Boss
-author: HappyPikachu
+author: PikaMug
+website: https://github.com/PikaMug/BossQuestsModule
 
 main: me.pikamug.BossQuestsModule
 depend: [Boss, Quests]
