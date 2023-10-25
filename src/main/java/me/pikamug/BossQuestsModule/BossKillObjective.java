@@ -12,9 +12,9 @@
 
 package me.pikamug.BossQuestsModule;
 
-import me.blackvein.quests.CustomObjective;
-import me.blackvein.quests.Quest;
-import me.blackvein.quests.Quester;
+import me.pikamug.quests.module.BukkitCustomObjective;
+import me.pikamug.quests.player.Quester;
+import me.pikamug.quests.quests.Quest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +22,7 @@ import org.mineacademy.boss.api.event.BossDeathEvent;
 
 import java.util.Map;
 
-public class BossKillObjective extends CustomObjective implements Listener {
+public class BossKillObjective extends BukkitCustomObjective implements Listener {
 	
 	public BossKillObjective() {
 		setName("Boss Kill Mobs Objective");
@@ -46,28 +46,28 @@ public class BossKillObjective extends CustomObjective implements Listener {
 	
 	@EventHandler
 	public void onBossDeath(BossDeathEvent event) {
-		Player killer = event.getEntity().getKiller();
+		final Player killer = event.getEntity().getKiller();
 		if (killer == null) {
 			return;
 		}
-		Quester quester = BossModule.getQuests().getQuester(killer.getUniqueId());
+		final Quester quester = BossModule.getQuests().getQuester(killer.getUniqueId());
 		if (quester == null) {
 			return;
 		}
-		String mobName = event.getBoss().getName();
-		String customMobName = event.getBoss().getAlias();
-		for (Quest q : quester.getCurrentQuests().keySet()) {
-			Map<String, Object> datamap = getDataForPlayer(killer, this, q);
+		final String mobName = event.getBoss().getName();
+		final String customMobName = event.getBoss().getAlias();
+		for (final Quest q : quester.getCurrentQuests().keySet()) {
+			final Map<String, Object> datamap = getDataForPlayer(killer.getUniqueId(), this, q);
 			if (datamap != null) {
-				String mobNames = (String)datamap.getOrDefault("Boss Kill Names", "ANY");
+				final String mobNames = (String)datamap.getOrDefault("Boss Kill Names", "ANY");
 				if (mobNames == null) {
 					return;
 				}
-				String[] spl = mobNames.split(",");
-				for (String str : spl) {
+				final String[] spl = mobNames.split(",");
+				for (final String str : spl) {
 					if (str.equals("ANY") || mobName.equalsIgnoreCase(str)
 					        || str.equalsIgnoreCase(customMobName)) {
-						incrementObjective(killer, this, 1, q);
+						incrementObjective(killer.getUniqueId(), this, q, 1);
 						return;
 					}
 				}
