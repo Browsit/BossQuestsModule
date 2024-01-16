@@ -4,5 +4,5 @@ description: Quests module for Boss
 author: Browsit
 website: https://github.com/Browsit/BossQuestsModule
 
-main: me.pikamug.BossQuestsModule
+main: org.browsit.BossQuestsModule
 depend: [Boss, Quests]
