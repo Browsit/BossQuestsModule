@@ -12,6 +12,7 @@
 
 package me.pikamug.BossQuestsModule;
 
+import me.pikamug.quests.enums.ObjectiveType;
 import me.pikamug.quests.module.BukkitCustomObjective;
 import me.pikamug.quests.player.Quester;
 import me.pikamug.quests.quests.Quest;
@@ -56,8 +57,8 @@ public class BossKillObjective extends BukkitCustomObjective implements Listener
 		}
 		final String mobName = event.getBoss().getName();
 		final String customMobName = event.getBoss().getAlias();
-		for (final Quest q : quester.getCurrentQuests().keySet()) {
-			final Map<String, Object> datamap = getDataForPlayer(killer.getUniqueId(), this, q);
+		for (final Quest quest : quester.getCurrentQuests().keySet()) {
+			final Map<String, Object> datamap = getDataForPlayer(killer.getUniqueId(), this, quest);
 			if (datamap != null) {
 				final String mobNames = (String)datamap.getOrDefault("Boss Kill Names", "ANY");
 				if (mobNames == null) {
@@ -67,7 +68,13 @@ public class BossKillObjective extends BukkitCustomObjective implements Listener
 				for (final String str : spl) {
 					if (str.equals("ANY") || mobName.equalsIgnoreCase(str)
 					        || str.equalsIgnoreCase(customMobName)) {
-						incrementObjective(killer.getUniqueId(), this, q, 1);
+						incrementObjective(killer.getUniqueId(), this, quest, 1);
+
+						quester.dispatchMultiplayerEverything(quest, ObjectiveType.CUSTOM,
+								(final Quester q, final Quest cq) -> {
+									incrementObjective(q.getUUID(), this, quest, 1);
+									return null;
+								});
 						return;
 					}
 				}
