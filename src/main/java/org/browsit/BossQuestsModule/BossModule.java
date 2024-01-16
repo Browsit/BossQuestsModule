@@ -10,7 +10,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package me.pikamug.BossQuestsModule;
+package org.browsit.BossQuestsModule;
 
 import me.pikamug.quests.BukkitQuestsPlugin;
 import org.bukkit.Bukkit;
